@@ -16,4 +16,9 @@ public class ErrorReporter
     {
         //TODO initialize error handling
     }
+
+    public static void handleCaughtException(Throwable thrown)
+    {
+        
+    }
 }
