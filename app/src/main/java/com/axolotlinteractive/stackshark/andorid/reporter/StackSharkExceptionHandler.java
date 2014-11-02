@@ -6,8 +6,6 @@ package com.axolotlinteractive.stackshark.andorid.reporter;
 
 class StackSharkExceptionHandler implements Thread.UncaughtExceptionHandler
 {
-    private String name;
-
     private Thread.UncaughtExceptionHandler handle;
     StackSharkExceptionHandler()
     {
@@ -16,7 +14,8 @@ class StackSharkExceptionHandler implements Thread.UncaughtExceptionHandler
     }
 
     @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
+    public void uncaughtException(Thread thread, Throwable ex)
+    {
         ErrorReporter.handleCaughtException(ex);
         handle.uncaughtException(thread, ex);
     }

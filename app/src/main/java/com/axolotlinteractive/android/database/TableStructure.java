@@ -2,13 +2,14 @@ package com.axolotlinteractive.android.database;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by brycemeyer on 11/2/14.
  */
-public class DatabaseTable
+public class TableStructure
 {
 
     /**
@@ -29,35 +30,13 @@ public class DatabaseTable
     private String[] Structures;
 
     /**
-     * whether or not this table is an associative table, this controls whether or not a primary id will be created
-     */
-    private boolean isAssoc;
-
-    /**
-     * INTEGER AUTO INCREMENT = the primary key of a row, if the table is associative this will not be generated
-     */
-    public static final String COLUMN_ID = "id";
-
-    /**
-     * INTEGER = the primary key of this entry on the server, this needs to be passed into its constructor if this field is nesscessary
-     */
-    public static final String COLUMN_SERVER = "server_id";
-
-    /**
      * @param name the name of the Database Table
      * @param columns the name of the columns in the database
      * @param structures the structure of the columns in the database
      */
-    public DatabaseTable(String name, String[] columns, String[] structures, boolean assoc)
+    public TableStructure(String name, String[] columns, String[] structures)
     {
-        Class<?> c = this.getClass();
-
-        Field f = c.getDeclaredField("myColor");
-        f.setAccessible(true);
-
-        String valueOfMyColor = (String) f.get(o);
         Name=name;
-        isAssoc = assoc;
         if(Name == null)
         {
             throw new NullPointerException("Error while creating Database Table you must specify the name of the table");

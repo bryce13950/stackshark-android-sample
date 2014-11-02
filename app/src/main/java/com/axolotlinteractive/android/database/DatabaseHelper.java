@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class DatabaseHelper{
 
-    public SQLiteDatabase mDatabase;
+    private SQLiteDatabase mDatabase;
 
-    public DatabaseHelper(Context ctx, String databaseName, int databaseVersion, List<DatabaseTable> tables)
+    public DatabaseHelper(Context ctx, String databaseName, int databaseVersion, List<TableStructure> tables)
     {
         Helper helper=new Helper(ctx, databaseName, databaseVersion, tables);
         mDatabase = helper.getWritableDatabase();
@@ -208,17 +208,17 @@ public class DatabaseHelper{
         /**
          * List of all tables inside of this database
          */
-        private final List<DatabaseTable> Tables;
-        public Helper(Context ctx, String name,int version,List<DatabaseTable> tables)
+        private final List<TableStructure> Tables;
+        public Helper(Context ctx, String name,int version,List<TableStructure> tables)
         {
             super(ctx, name, null, version);
-            Tables=tables;
+            Tables = tables;
         }
 
         @Override
         public void onCreate(SQLiteDatabase db)
         {
-            for(DatabaseTable table: Tables)
+            for(TableStructure table: Tables)
             {
                 table.createTable(db);
             }
@@ -227,7 +227,7 @@ public class DatabaseHelper{
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
-            for(DatabaseTable table : Tables)
+            for(TableStructure table : Tables)
             {
                 table.updateTable(db, oldVersion);
             }

@@ -10,11 +10,11 @@ import java.util.Map;
  */
 public abstract class DatabaseObject
 {
-    public DatabaseObject(HashMap<String, Object> data)
+    public DatabaseObject(HashMap<String, String> data)
     {
         Class<?> objectType = this.getClass();
 
-        for(Map.Entry<String, Object> entry : data.entrySet())
+        for(Map.Entry<String, String> entry : data.entrySet())
         {
 
             try
@@ -33,6 +33,4 @@ public abstract class DatabaseObject
             }
         }
     }
-
-    public abstract void save();
 }
