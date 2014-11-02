@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * Created by brycemeyer on 11/2/14.
  */
-public class Stack extends DatabaseObject
+public class StackObject extends DatabaseObject
 {
 
     public int stack_id;
@@ -15,7 +15,7 @@ public class Stack extends DatabaseObject
     public String class_name;
     public String method_name;
     public int line_number;
-    private Stack(HashMap<String, Object> data)
+    private StackObject(HashMap<String, Object> data)
     {
         super(data);
     }

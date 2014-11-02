@@ -7,17 +7,20 @@ import java.util.HashMap;
 /**
  * Created by brycemeyer on 11/2/14.
  */
-public class Error extends DatabaseObject
+public class ErrorObject extends DatabaseObject
 {
     public int error_id;
 
     public String message;
-    public Stack[] stackTrace;
+    public StackObject[] stackTrace;
     public int offline;
+    /**
+     * int = whether or not this is synced with the server 0 for no, 1 for yes
+     */
     public int synced;
 //    public static final String COLUMN_ERROR_ID = "error_id";
 //    public static final String COLUMN_
-    private Error(HashMap<String, Object> data)
+    private ErrorObject(HashMap<String, Object> data)
     {
         super(data);
     }
@@ -28,8 +31,9 @@ public class Error extends DatabaseObject
 
     }
 
-    public static Error createError(Throwable thrown)
+    public static ErrorObject createError(Throwable thrown)
     {
 
+        return null;
     }
 }
