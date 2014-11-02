@@ -50,6 +50,12 @@ public class DatabaseTable
      */
     public DatabaseTable(String name, String[] columns, String[] structures, boolean assoc)
     {
+        Class<?> c = this.getClass();
+
+        Field f = c.getDeclaredField("myColor");
+        f.setAccessible(true);
+
+        String valueOfMyColor = (String) f.get(o);
         Name=name;
         isAssoc = assoc;
         if(Name == null)

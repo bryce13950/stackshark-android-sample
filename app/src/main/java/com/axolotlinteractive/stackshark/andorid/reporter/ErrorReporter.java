@@ -15,5 +15,6 @@ public class ErrorReporter
     public static void init()
     {
         //TODO initialize error handling
+
     }
 }
