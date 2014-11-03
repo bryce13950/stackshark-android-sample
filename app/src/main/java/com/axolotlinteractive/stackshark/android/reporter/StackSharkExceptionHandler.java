@@ -1,4 +1,4 @@
-package com.axolotlinteractive.stackshark.andorid.reporter;
+package com.axolotlinteractive.stackshark.android.reporter;
 
 /**
  * Created by JakeW on 11/2/14.

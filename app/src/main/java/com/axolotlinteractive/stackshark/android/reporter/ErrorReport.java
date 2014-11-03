@@ -1,10 +1,10 @@
-package com.axolotlinteractive.stackshark.andorid.reporter;
+package com.axolotlinteractive.stackshark.android.reporter;
 
 import android.os.AsyncTask;
 import android.os.Build;
 
-import com.axolotlinteractive.stackshark.andorid.reporter.database.ErrorObject;
-import com.axolotlinteractive.stackshark.andorid.reporter.database.StackObject;
+import com.axolotlinteractive.stackshark.android.reporter.database.ErrorObject;
+import com.axolotlinteractive.stackshark.android.reporter.database.StackObject;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -57,6 +57,7 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
             data.add(new BasicNameValuePair("application_version", error.application_version));
             data.add(new BasicNameValuePair("platform_version", error.platform_version));
             data.add(new BasicNameValuePair("type", error.type));
+            data.add(new BasicNameValuePair("project_key", ErrorReporter.ProjectKey));
 
             JSONArray stack = new JSONArray();
             for(StackObject trace : error.stackTrace)

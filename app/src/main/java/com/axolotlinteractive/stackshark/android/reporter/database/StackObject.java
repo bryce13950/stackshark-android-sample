@@ -1,9 +1,9 @@
-package com.axolotlinteractive.stackshark.andorid.reporter.database;
+package com.axolotlinteractive.stackshark.android.reporter.database;
 
 import com.axolotlinteractive.android.database.DatabaseHelper;
 import com.axolotlinteractive.android.database.DatabaseObject;
 import com.axolotlinteractive.android.database.TableStructure;
-import com.axolotlinteractive.stackshark.andorid.reporter.ErrorReporter;
+import com.axolotlinteractive.stackshark.android.reporter.ErrorReporter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

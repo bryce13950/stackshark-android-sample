@@ -1,11 +1,11 @@
-package com.axolotlinteractive.stackshark.andorid.reporter;
+package com.axolotlinteractive.stackshark.android.reporter;
 
 import android.content.Context;
 
 import com.axolotlinteractive.android.database.DatabaseHelper;
 import com.axolotlinteractive.android.database.TableStructure;
-import com.axolotlinteractive.stackshark.andorid.reporter.database.ErrorObject;
-import com.axolotlinteractive.stackshark.andorid.reporter.database.StackObject;
+import com.axolotlinteractive.stackshark.android.reporter.database.ErrorObject;
+import com.axolotlinteractive.stackshark.android.reporter.database.StackObject;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ErrorReporter
 {
-    private static String ProjectKey;
+    static String ProjectKey;
 
     public static DatabaseHelper dbHelper;
 

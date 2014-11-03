@@ -1,4 +1,4 @@
-package com.axolotlinteractive.stackshark.andorid.reporter;
+package com.axolotlinteractive.stackshark.android.reporter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
