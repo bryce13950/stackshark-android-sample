@@ -18,22 +18,32 @@ public class ErrorReporter
 
     public static DatabaseHelper dbHelper;
 
+    public static Context mContext;
+
     public static void setProjectKey(String projectKey)
     {
         ProjectKey = projectKey;
     }
 
-    public static void init(Context ctx)
+    public static void init(Context context)
     {
+        mContext = context;
+
         ArrayList<TableStructure> tables = new ArrayList<TableStructure>();
         tables.add(ErrorObject.getStructure());
         tables.add(StackObject.getStructure());
-        dbHelper = new DatabaseHelper(ctx, "stack_shark", 1, tables);
+        dbHelper = new DatabaseHelper(mContext, "stack_shark", 1, tables);
+
         new StackSharkExceptionHandler();
+
+        ErrorObject oldError = ErrorObject.fetchUnsyncedError();
+        if(oldError != null)
+            new ErrorReport(oldError);
     }
 
     public static void handleCaughtException(Throwable thrown)
     {
         ErrorObject error = ErrorObject.createError(thrown);
+        new ErrorReport(error);
     }
 }

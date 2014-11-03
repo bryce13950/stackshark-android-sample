@@ -1,5 +1,10 @@
 package com.axolotlinteractive.stackshark.andorid.reporter.database;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.util.Log;
+
 import com.axolotlinteractive.android.database.DatabaseHelper;
 import com.axolotlinteractive.android.database.DatabaseObject;
 import com.axolotlinteractive.android.database.TableStructure;
@@ -24,6 +29,8 @@ public class ErrorObject extends DatabaseObject
      * int = whether or not this is synced with the server 0 for no, 1 for yes
      */
     public String synced = "0";
+    public String platform_version;
+    public String application_version;
     private ErrorObject(HashMap<String, String> data)
     {
         super(data);
@@ -57,6 +64,8 @@ public class ErrorObject extends DatabaseObject
     public static ErrorObject fetchUnsyncedError()
     {
         List<HashMap<String, String>> rawData = ErrorReporter.dbHelper.getTable("error", "synced = ?", new String[]{"0"});
+        if(rawData.size() == 0)
+            return null;
         ErrorObject error = new ErrorObject(rawData.get(0));
         error.loadStack();
         return error;
@@ -67,7 +76,19 @@ public class ErrorObject extends DatabaseObject
         ErrorObject error = new ErrorObject(new HashMap<String, String>());
         error.message = thrown.getMessage();
         error.type = thrown.getClass().getName();
-        error.error_id = "" +  ErrorReporter.dbHelper.insert("error", new String[] {"message", "type"}, new String[]{error.message, error.type});
+        error.platform_version = "" + Build.VERSION.SDK_INT;
+        try {
+            PackageInfo pInfo = ErrorReporter.mContext.getPackageManager().getPackageInfo(ErrorReporter.mContext.getPackageName(), 0);
+            error.application_version = "" + pInfo.versionCode;
+        }
+        catch(PackageManager.NameNotFoundException e)
+        {
+            error.application_version = "0";
+            Log.e("SharkStack", "Exception when finding application name", e);
+        }
+        String[] columns = new String[] {"message", "type", "platform_version", "application_version"};
+        String[] values = new String[]{error.message, error.type, error.platform_version, error.application_version};
+        error.error_id = "" +  ErrorReporter.dbHelper.insert("error", columns, values);
         error.stackTrace = new ArrayList<StackObject>();
         if(thrown.getCause() != null && thrown.getCause().getStackTrace() != null)
             error.stackTrace.addAll(StackObject.createStacks(thrown.getCause().getStackTrace(), error));
