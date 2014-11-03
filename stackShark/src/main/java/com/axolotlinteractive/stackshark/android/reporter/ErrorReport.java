@@ -2,6 +2,7 @@ package com.axolotlinteractive.stackshark.android.reporter;
 
 import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 
 import com.axolotlinteractive.stackshark.android.reporter.database.ErrorObject;
 import com.axolotlinteractive.stackshark.android.reporter.database.StackObject;
@@ -89,6 +90,7 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
         }
         catch(Exception e)
         {
+            Log.e("stackShark", "Unknown exception when sending error report", e);
             error.setNetworkDown();
             return false;
         }
