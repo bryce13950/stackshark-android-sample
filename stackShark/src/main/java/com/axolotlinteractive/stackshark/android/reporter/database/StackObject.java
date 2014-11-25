@@ -61,10 +61,10 @@ public class StackObject extends DatabaseObject
     {
         return new TableStructure("stack", new String[]{
                 "stack_id", "file_name", "class_name",
-                "method_name", "line_number"
+                "method_name", "line_number", "error_id"
         }, new String[]{
                 "INTEGER PRIMARY KEY", "TEXT", "TEXT",
-                "TEXT", "INTEGER"
+                "TEXT", "INTEGER", "INTEGER"
         });
     }
 

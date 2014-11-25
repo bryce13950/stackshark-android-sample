@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class ErrorObject extends DatabaseObject
 {
+    public ArrayList<StackObject> stackTrace;
     public String error_id;
 
     public String type;
     public String message;
-    public ArrayList<StackObject> stackTrace;
     public String offline = "0";
     /**
      * int = whether or not this is synced with the server 0 for no, 1 for yes
@@ -73,6 +73,11 @@ public class ErrorObject extends DatabaseObject
 
     public static ErrorObject createError(Throwable thrown)
     {
+        return ErrorObject.createError(thrown, false);
+    }
+
+    public static ErrorObject createError(Throwable thrown, boolean networkError)
+    {
         ErrorObject error = new ErrorObject(new HashMap<String, String>());
         error.message = thrown.getMessage();
         error.type = thrown.getClass().getName();
@@ -86,8 +91,8 @@ public class ErrorObject extends DatabaseObject
             error.application_version = "0";
             Log.e("SharkStack", "Exception when finding application name", e);
         }
-        String[] columns = new String[] {"message", "type", "platform_version", "application_version"};
-        String[] values = new String[]{error.message, error.type, error.platform_version, error.application_version};
+        String[] columns = new String[] {"message", "type", "platform_version", "application_version", "synced"};
+        String[] values = new String[]{error.message, error.type, error.platform_version, error.application_version, networkError ? "1" : "0"};
         error.error_id = "" +  ErrorReporter.dbHelper.insert("error", columns, values);
         error.stackTrace = new ArrayList<StackObject>();
         if(thrown.getCause() != null && thrown.getCause().getStackTrace() != null)
@@ -101,9 +106,9 @@ public class ErrorObject extends DatabaseObject
     public static TableStructure getStructure()
     {
         return new TableStructure("error", new String[]{
-                "error_id", "message", "offline", "synced", "type"
+                "error_id", "message", "offline", "synced", "type", "platform_version", "application_version"
         },new String[]{
-                "INTEGER PRIMARY KEY", "TEXT", "INTEGER DEFAULT 0", "INTEGER DEFAULT 1", "TEXT"
+                "INTEGER PRIMARY KEY", "TEXT", "INTEGER DEFAULT 0", "INTEGER DEFAULT 1", "TEXT", "INTEGER", "INTEGER"
         });
     }
 }
