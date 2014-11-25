@@ -51,7 +51,7 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
         try
         {
             HttpPut put = new HttpPut(url);
-            ArrayList<NameValuePair> data= new ArrayList<NameValuePair>();
+            ArrayList<NameValuePair> data = new ArrayList<NameValuePair>();
 
             data.add(new BasicNameValuePair("offline", error.offline));
             data.add(new BasicNameValuePair("message", error.message));
@@ -80,7 +80,11 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
 
             HttpResponse response = httpClient.execute(put);
             HttpEntity ent = response.getEntity();
-            JSONObject responseObject = new JSONObject(EntityUtils.toString(ent));
+            String rawResponse = EntityUtils.toString(ent);
+
+            Log.d("stackShark", "rawResponse = " + rawResponse);
+
+            JSONObject responseObject = new JSONObject(rawResponse);
             if(responseObject.getInt("status") == 3101)
                 error.setReceived();
             else
@@ -90,8 +94,9 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
         }
         catch(Exception e)
         {
-            Log.e("stackShark", "Unknown exception when sending error report", e);
-            error.setNetworkDown();
+            Log.e("stackShark", e.getMessage(), e);
+            if(error != null)
+                error.setNetworkDown();
             return false;
         }
     }
@@ -102,7 +107,8 @@ public class ErrorReport extends AsyncTask<ErrorObject, Void, Boolean>
         if(runNext)
         {
             ErrorObject cachedError = ErrorObject.fetchUnsyncedError();
-            new ErrorReport(cachedError);
+            if(cachedError != null)
+                new ErrorReport(cachedError);
         }
     }
 }
