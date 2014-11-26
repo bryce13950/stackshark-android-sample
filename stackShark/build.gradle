@@ -19,6 +19,16 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://bitbucket.org/axolotlinteractive/phishyphramework-android-databases'
+        credentials {
+            username 'axolotlinteractive'
+            password 'fishpeoplebitbucket'
+        }
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.0'
