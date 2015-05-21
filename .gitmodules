@@ -1,3 +1,6 @@
 [submodule "anolis-databases"]
 	path = anolis-databases
 	url = https://github.com/bryce13950/anolis-databases/
+[submodule "stackshark-android"]
+	path = stackshark-android
+	url = https://github.com/bryce13950/stackshark-android
